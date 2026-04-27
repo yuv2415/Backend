@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-bar">
+    <h2>Your Todos</h2>
+    <a href="/logout" class="logout-btn">Logout</a>
+  </div>
+
+  <form method="POST" action="/todos/add">
+    <input name="title" placeholder="New Todo" required />
+    <button>Add</button>
+  </form>
+
+  <ul>
+    <% if (todos.length === 0) { %>
+      <p>No todos yet 😢</p>
+    <% } %>
+
+    <% todos.forEach(todo => { %>
+      <li>
+
+        <form method="POST" action="/todos/toggle/<%= todo._id %>">
+          <button><%= todo.completed ? "✅" : "❌" %></button>
+        </form>
+
+        <span class="<%= todo.completed ? 'completed' : '' %>">
+          <%= todo.title %>
+        </span>
+
+        <form method="POST" action="/todos/delete/<%= todo._id %>">
+          <button style="background:red;">Delete</button>
+        </form>
+
+      </li>
+    <% }) %>
+  </ul>
+
+</div>
+
+</body>
+</html>
